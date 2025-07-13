@@ -36,7 +36,7 @@ The Marketing Agent System is a sophisticated multi-agent framework built on Goo
 
 ### Core Components
 
-#### 1. Base Agent Framework
+#### 1. Base Agent Framework 
 - **MarketingAgent**: Enhanced LlmAgent with built-in quality assessment
 - **Quality Assessment**: Automatic output evaluation with retry logic
 - **Tool Integration**: Extensible tool registry for research capabilities
