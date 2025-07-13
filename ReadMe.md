@@ -1,4 +1,57 @@
-# Enhanced Marketing Agents System Documentation
+### User Interaction Patterns and Use Cases
+
+#### Use Case 1: Standard Campaign Creation Flow
+
+```mermaid
+flowchart TD
+    A[Marketing Manager] --> B[Access System Interface]
+    B --> C[Enter Product Description]
+    C --> D["Example: 'AI-powered fitness app for busy professionals'"]
+    D --> E[Submit Campaign Request]
+    
+    E --> F[System Validates Input]
+    F --> G[Campaign Processing Begins]
+    G --> H[Real-time Progress Dashboard]
+    
+    H --> I[Research Phase: 2-3 minutes]
+    I --> J[User Sees Market Insights Preview]
+    J --> K[Analysis Phase: 1-2 minutes]
+    K --> L[User Reviews Competitive Analysis]
+    
+    L --> M[Strategy Phase: 3-4 minutes]
+    M --> N[User Previews Messaging Strategy]
+    N --> O[User Reviews Multi-Channel Copy]
+    O --> P[User Sees Visual Concepts]
+    
+    P --> Q[Formatting Phase: 1 minute]
+    Q --> R[Complete Campaign Delivered]
+    R --> S[User Downloads Campaign Brief]
+    S --> T[Campaign Implementation]
+    
+    %% Styling
+    classDef user fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef input fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef processing fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef output fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    
+    class A,J,L,N,O,P,S,T user
+    class B,C,D,E,F input
+    class G,H,I,K,M,Q processing
+    class R output
+```
+
+#### Use Case 2: Quality Issue Resolution Flow
+
+```mermaid
+flowchart TD
+    A[User Submits Campaign] --> B[Processing Begins]
+    B --> C[Research Agent Executes]
+    C --> D{Quality Check}
+    D -->|Pass| E[Continue to Next Phase]
+    D -->|Fail| F[Quality Issue Detected]
+    
+    F --> G[User Notification: 'Research quality below threshold']
+    G --> H[System Automatic Retry]# Enhanced Marketing Agents System Documentation
 
 ## Overview
 
@@ -320,7 +373,126 @@ class CampaignOrchestrator(SequentialAgent):
 - **State Management**: Maintains state across all phases
 - **Modular Design**: Each phase can be modified independently
 
-## System Flow Diagram
+## User Interaction Diagrams
+
+### User Journey Flow Diagram
+
+```mermaid
+journey
+    title User Marketing Campaign Creation Journey
+    section Campaign Initiation
+      User describes product/service: 5: User
+      System validates input: 3: System
+      Campaign orchestrator starts: 4: System
+    section Research Phase
+      Market research begins: 4: System
+      External data gathering: 3: System
+      Research summary generated: 5: User
+    section Analysis Phase  
+      Competitive analysis (conditional): 4: System
+      Intelligence gathering: 3: System
+      Analysis results available: 4: User
+    section Strategy Development
+      Messaging strategy created: 5: User
+      Multi-channel copy generated: 5: User
+      Visual concepts proposed: 4: User
+    section Final Delivery
+      Campaign brief formatted: 4: System
+      Complete strategy delivered: 5: User
+      User reviews final output: 5: User
+```
+
+### User Interface Interaction Diagram
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant UI as Web Interface
+    participant CO as Campaign Orchestrator
+    participant RP as Research Phase
+    participant AP as Analysis Phase
+    participant SP as Strategy Phase
+    participant OP as Output Phase
+    
+    U->>UI: Enter product/service description
+    UI->>CO: Initialize campaign workflow
+    CO->>UI: Acknowledge request
+    UI->>U: Display "Processing..." status
+    
+    CO->>RP: Execute market research
+    RP->>UI: Update progress: "Researching market..."
+    UI->>U: Show research progress
+    
+    RP->>CO: Return research results
+    CO->>CO: Evaluate need for competitive analysis
+    
+    alt Competitive analysis needed
+        CO->>AP: Execute competitive intelligence
+        AP->>UI: Update progress: "Analyzing competition..."
+        UI->>U: Show analysis progress
+        AP->>CO: Return analysis results
+    end
+    
+    CO->>SP: Execute strategy development
+    SP->>UI: Update progress: "Developing strategy..."
+    UI->>U: Show strategy progress
+    
+    SP->>CO: Return strategy components
+    CO->>OP: Execute final formatting
+    OP->>UI: Update progress: "Formatting campaign..."
+    UI->>U: Show formatting progress
+    
+    OP->>CO: Return final campaign
+    CO->>UI: Deliver complete campaign
+    UI->>U: Display final marketing campaign
+    
+    U->>UI: Review campaign results
+    UI->>U: Provide download/export options
+```
+
+### User Experience States Diagram
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> InputSubmission : User enters product description
+    InputSubmission --> Validating : System validates input
+    Validating --> Processing : Input accepted
+    Validating --> InputError : Invalid input
+    InputError --> InputSubmission : User corrects input
+    
+    Processing --> ResearchActive : Market research begins
+    ResearchActive --> ResearchComplete : Research finished
+    ResearchComplete --> AnalysisDecision : Evaluate analysis need
+    
+    AnalysisDecision --> AnalysisActive : Competitive analysis needed
+    AnalysisDecision --> StrategyActive : Skip analysis
+    AnalysisActive --> AnalysisComplete : Analysis finished
+    AnalysisComplete --> StrategyActive : Proceed to strategy
+    
+    StrategyActive --> StrategyComplete : Strategy development done
+    StrategyComplete --> FormattingActive : Begin final formatting
+    FormattingActive --> CampaignReady : Campaign completed
+    
+    CampaignReady --> UserReview : User reviews results
+    UserReview --> Satisfied : User accepts campaign
+    UserReview --> RequestRevision : User requests changes
+    RequestRevision --> Processing : Restart with modifications
+    
+    Satisfied --> [*] : Campaign delivered
+    
+    note right of Processing
+        User sees progress indicators
+        and real-time status updates
+    end note
+    
+    note right of UserReview
+        User can download, export,
+        or request modifications
+    end note
+```
+
+### System Flow Diagram
 
 ```mermaid
 flowchart TD
@@ -380,6 +552,245 @@ flowchart TD
     class H,E,L,P,T decision
     class G,N,R,V quality
     class A,CC userflow
+```
+
+### User Feedback Loop Diagram
+
+```mermaid
+flowchart TD
+    A[User Submits Product Description] --> B[System Processes Input]
+    B --> C[Real-time Progress Updates]
+    C --> D[Phase Completion Notifications]
+    
+    D --> E{Quality Gates}
+    E -->|Pass| F[Continue to Next Phase]
+    E -->|Fail| G[Retry with Improvements]
+    G --> H[User Notification: Retrying]
+    H --> I[Enhanced Processing]
+    I --> E
+    
+    F --> J[Intermediate Results Available]
+    J --> K[User Can Preview Results]
+    K --> L{User Satisfaction}
+    L -->|Satisfied| M[Continue Processing]
+    L -->|Needs Adjustment| N[User Provides Feedback]
+    
+    N --> O[System Incorporates Feedback]
+    O --> P[Adjust Processing Parameters]
+    P --> Q[Resume with Modifications]
+    Q --> F
+    
+    M --> R[Final Campaign Delivery]
+    R --> S[User Reviews Complete Campaign]
+    S --> T{Final Approval}
+    T -->|Approved| U[Campaign Accepted]
+    T -->|Revision Needed| V[User Requests Changes]
+    
+    V --> W[Specific Feedback Collected]
+    W --> X[Targeted Revisions]
+    X --> R
+    
+    U --> Y[Export/Download Options]
+    Y --> Z[Campaign Implementation]
+    
+    %% Styling
+    classDef userAction fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef systemProcess fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef feedback fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef decision fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef quality fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    
+    class A,K,N,S,V,W,Y userAction
+    class B,C,D,F,I,J,M,O,P,Q,R,X,Z systemProcess
+    class H,G feedback
+    class L,T,E decision
+```
+
+### Multi-User Interaction Diagram
+
+```mermaid
+sequenceDiagram
+    participant M as Marketing Manager
+    participant S as System
+    participant T as Team Member
+    participant A as Agency Partner
+    
+    M->>S: Submit campaign request
+    S->>M: Confirm request received
+    
+    par Parallel Processing
+        S->>S: Execute market research
+        S->>M: Progress update: Research phase
+    and
+        S->>T: Notify team of new campaign
+        T->>S: Subscribe to updates
+    end
+    
+    S->>M: Research complete - preview available
+    M->>T: Share research preview
+    T->>M: Provide feedback on research
+    
+    M->>S: Incorporate team feedback
+    S->>S: Adjust strategy based on feedback
+    
+    S->>M: Strategy phase complete
+    M->>A: Share strategy for review
+    A->>M: Provide creative input
+    
+    M->>S: Integrate agency feedback
+    S->>S: Refine creative elements
+    
+    S->>M: Final campaign ready
+    M->>T: Share final campaign
+    M->>A: Share final campaign
+    
+    par Final Review
+        T->>M: Approve campaign
+        A->>M: Approve campaign
+    end
+    
+    M->>S: Campaign approved
+    S->>M: Provide export options
+    M->>M: Download campaign assets
+```
+
+### Error Handling and Recovery Diagram
+
+```mermaid
+flowchart TD
+    A[User Input] --> B[System Validation]
+    B -->|Valid| C[Begin Processing]
+    B -->|Invalid| D[Error: Invalid Input]
+    D --> E[Display Error Message]
+    E --> F[Suggest Corrections]
+    F --> G[User Corrects Input]
+    G --> A
+    
+    C --> H[Agent Execution]
+    H --> I{Quality Check}
+    I -->|Pass| J[Continue Workflow]
+    I -->|Fail| K[Quality Failure]
+    K --> L[Retry Logic Activated]
+    L --> M{Retry Attempts < Max?}
+    M -->|Yes| N[Enhanced Instructions]
+    N --> O[Retry Execution]
+    O --> I
+    M -->|No| P[Max Retries Reached]
+    
+    P --> Q[Notify User of Issue]
+    Q --> R[Provide Options]
+    R --> S{User Choice}
+    S -->|Accept Current| T[Continue with Current Quality]
+    S -->|Retry Manual| U[User Provides Additional Input]
+    S -->|Cancel| V[Abort Campaign]
+    
+    U --> W[Enhanced Context Added]
+    W --> X[Reset Retry Counter]
+    X --> H
+    
+    T --> J
+    J --> Y[Next Phase]
+    Y --> Z[Process Complete]
+    
+    V --> AA[Cleanup Resources]
+    AA --> BB[Return to Start]
+    
+    %% System Errors
+    H --> CC{System Error?}
+    CC -->|Yes| DD[Error Handling]
+    CC -->|No| I
+    DD --> EE[Log Error Details]
+    EE --> FF[Attempt Recovery]
+    FF --> GG{Recovery Successful?}
+    GG -->|Yes| H
+    GG -->|No| HH[Escalate to Support]
+    HH --> II[User Notification]
+    II --> JJ[Support Contact Info]
+    
+    %% Styling
+    classDef userAction fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef systemProcess fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef error fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    classDef decision fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef recovery fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    
+    class A,G,U,S userAction
+    class B,C,H,J,Y,Z,AA,BB,EE,FF systemProcess
+    class D,E,K,P,Q,DD,HH,II,JJ error
+    class I,M,S,CC,GG decision
+    class F,L,N,O,R,T,W,X recovery
+```
+
+### System Monitoring and User Dashboard Diagram
+
+```mermaid
+flowchart TD
+    A[User Dashboard] --> B[Campaign Status Panel]
+    B --> C[Current Phase Indicator]
+    C --> D[Progress Bar]
+    D --> E[Time Estimates]
+    
+    B --> F[Quality Metrics Display]
+    F --> G[Quality Scores by Phase]
+    G --> H[Quality Trend Analysis]
+    
+    B --> I[Agent Activity Monitor]
+    I --> J[Current Agent Status]
+    J --> K[Agent Performance Metrics]
+    
+    B --> L[Resource Usage Panel]
+    L --> M[API Call Counter]
+    M --> N[Processing Time Tracker]
+    
+    A --> O[Intermediate Results Viewer]
+    O --> P[Research Preview]
+    O --> Q[Strategy Preview]
+    O --> R[Creative Preview]
+    
+    A --> S[Control Panel]
+    S --> T[Pause Campaign Button]
+    S --> U[Cancel Campaign Button]
+    S --> V[Adjust Parameters Button]
+    
+    T --> W[Pause Confirmation]
+    W --> X[Save Current State]
+    X --> Y[Resume Available]
+    
+    U --> Z[Cancel Confirmation]
+    Z --> AA[Cleanup Process]
+    AA --> BB[Return to Start]
+    
+    V --> CC[Parameter Adjustment Modal]
+    CC --> DD[Quality Threshold Settings]
+    CC --> EE[Retry Limit Settings]
+    CC --> FF[Agent Configuration]
+    
+    FF --> GG[Apply Changes]
+    GG --> HH[Restart with New Settings]
+    
+    A --> II[Export Options]
+    II --> JJ[PDF Export]
+    II --> KK[JSON Export]
+    II --> LL[API Integration]
+    
+    %% Real-time Updates
+    A --> MM[Real-time Updates]
+    MM --> NN[WebSocket Connection]
+    NN --> OO[Live Status Updates]
+    OO --> PP[Notification System]
+    
+    %% Styling
+    classDef dashboard fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef monitoring fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef control fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef preview fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef realtime fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    
+    class A,B,S,II dashboard
+    class C,D,E,F,G,H,I,J,K,L,M,N monitoring
+    class T,U,V,W,Z,CC,DD,EE,FF,GG control
+    class O,P,Q,R preview
+    class MM,NN,OO,PP realtime
 ```
 
 ## Detailed System Flow
